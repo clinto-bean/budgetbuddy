@@ -22,9 +22,17 @@ export const subscriptionDataTypes = {
 }
 
 export const navInfo = {
+  // Navbar links. Only public are visible unless logged in.
   links: [
-    { id: 0, name: "Home", href: "/", public: true },
-    { id: 1, name: "Admin", href: "/404", public: false },
+    { id: 0, name: "Docs", href: "/", public: true, premium: false },
+    { id: 1, name: "Admin", href: "/404", public: false, premium: false },
+    {
+      id: 2,
+      name: "Premium",
+      href: "/subscribe",
+      public: false,
+      premium: false,
+    },
   ],
 }
 

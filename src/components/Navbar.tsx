@@ -14,37 +14,34 @@ import {
 
 import Link from "next/link"
 
-const user = { signedIn: true }
+type navLink = {
+  name: string
+  id: number
+  href: string
+  public: boolean
+  premium?: boolean
+}
+
+const user = { signedIn: false, admin: false }
 
 import React from "react"
 import { navInfo as data } from "../app/data.ts"
 
 function Navbar() {
+  const filterLinks = (link: navLink) => (user.signedIn ? link : link.public)
   return (
-    <NavigationMenu>
+    <NavigationMenu className='w-full bg-secondary'>
       <NavigationMenuList>
-        <NavigationMenuItem>Budget Buddy</NavigationMenuItem>
-        {!user.signedIn
-          ? data.links.map(
-              (link) =>
-                link.public && (
-                  <NavigationMenuItem key={link.id}>
-                    <Link href={link.href} legacyBehavior passHref>
-                      <NavigationMenuLink>{link.name}</NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                )
-            )
-          : data.links.map(
-              (link) =>
-                link && (
-                  <NavigationMenuItem key={link.id}>
-                    <Link href={link.href} legacyBehavior passHref>
-                      <NavigationMenuLink>{link.name}</NavigationMenuLink>
-                    </Link>
-                  </NavigationMenuItem>
-                )
-            )}
+        <NavigationMenuItem className={`text-xl font-bold text-green-700`}>
+          <NavigationMenuLink href='/'>Budget Buddy</NavigationMenuLink>
+        </NavigationMenuItem>
+        {data.links.filter(filterLinks).map((link) => (
+          <NavigationMenuItem key={link.id}>
+            <Link href={link.href} legacyBehavior passHref>
+              <NavigationMenuLink>{link.name}</NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        ))}
       </NavigationMenuList>
     </NavigationMenu>
   )
