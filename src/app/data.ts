@@ -1,7 +1,7 @@
 export const subscriptionDataTypes = {
   categories: [
-    "Subscriptions",
     "Groceries",
+    "Subscriptions",
     "Utilities",
     "Recreation",
     "Hobby",
@@ -10,11 +10,25 @@ export const subscriptionDataTypes = {
     "Investments",
     "Gaming",
   ],
-  priority: ["Essential", "Important", "Not Important"],
-  paymentTypes: ["Annually", "Monthly", "Weekly", "One-Time", "Per-Use"],
+  priority: ["Not Important", "Important", "Required"],
+  paymentTypes: [
+    "One-Time",
+    "Annually",
+    "Monthly",
+    "Weekly",
+    "Daily",
+    "Per-Use",
+  ],
 }
 
-const dbUser = {
+export const navInfo = {
+  links: [
+    { id: 0, name: "Home", href: "/", public: true },
+    { id: 1, name: "Admin", href: "/404", public: false },
+  ],
+}
+
+export const dbUser = {
   // _id:objectID(#),
   //username: NAME,
   //password: HASH(PASS),
