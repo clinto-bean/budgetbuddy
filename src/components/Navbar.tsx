@@ -25,7 +25,7 @@ type navLink = {
 const user = { signedIn: false, admin: false }
 
 import React from "react"
-import { navInfo as data } from "../app/data.ts"
+import { navInfo as data } from "../app/d.ts"
 
 function Navbar() {
   const filterLinks = (link: navLink) => (user.signedIn ? link : link.public)
