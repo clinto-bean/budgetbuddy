@@ -18,24 +18,44 @@ type navLink = {
   name: string
   id: number
   href: string
-  public: boolean
-  premium?: boolean
+  accessLevel: string | string[]
 }
 
-const user = { signedIn: false, admin: false }
+type User = {
+  permissions: string
+  signedIn: boolean
+}
+
+let user = { permission: "owner", signedIn: true }
 
 import React from "react"
-import { navInfo as data } from "../app/d.ts"
+import { navLinks } from "@/c"
 
 function Navbar() {
-  const filterLinks = (link: navLink) => (user.signedIn ? link : link.public)
+  if (!user.signedIn || !user) {
+    user.permission = "guest"
+  }
+  function checkPermission(
+    permissions: string,
+    requiredLevel: string | string[]
+  ) {
+    if (Array.isArray(requiredLevel)) {
+      return requiredLevel.some((level) => permissions === level)
+    }
+    return permissions === requiredLevel
+  }
+
+  const filteredLinks = navLinks.filter(
+    (link) => checkPermission(user.permission, link.accessLevel) && link.id >= 0
+  )
+
   return (
     <NavigationMenu className='w-full bg-secondary'>
       <NavigationMenuList>
         <NavigationMenuItem className={`text-xl font-bold text-green-700`}>
           <NavigationMenuLink href='/'>Budget Buddy</NavigationMenuLink>
         </NavigationMenuItem>
-        {data.links.filter(filterLinks).map((link) => (
+        {filteredLinks.map((link: navLink) => (
           <NavigationMenuItem key={link.id}>
             <Link href={link.href} legacyBehavior passHref>
               <NavigationMenuLink>{link.name}</NavigationMenuLink>

@@ -2,6 +2,7 @@ const MongoClient = require("mongodb").MongoClient
 const ServerApiVersion = require("mongodb").ServerApiVersion
 const dotenv = require("dotenv")
 const path = require("path")
+const { setClient, insertExpense } = require("./api/expenses")
 
 dotenv.config({ path: path.resolve(__dirname, "../../.env") })
 
@@ -27,5 +28,7 @@ async function run() {
     await client.close()
   }
 }
+
+setClient(client)
 
 run().catch(console.dir)

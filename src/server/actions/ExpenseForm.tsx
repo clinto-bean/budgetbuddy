@@ -3,7 +3,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { subscriptionDataTypes as data } from "../../app/d"
+import { subscriptionDataTypes } from "@/d"
+import { subscriptionData } from "@/c"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,32 +24,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { formSchema } from "@/server/api/formSchema"
 
-const categories = data.categories
-const priorities = data.priority
-const paymentTypes = data.paymentTypes
+type Props = {
+  expenseData: subscriptionDataTypes
+}
 
-const formSchema = z.object({
-  expenseName: z
-    .string()
-    .min(1, { message: "Please provide a name for this expense." }),
-  expenseCost: z
-    .string()
-    .regex(
-      new RegExp(/^[0-9]+(?:\.[0-9]+)?$/),
-      "Please only include numbers and decimals."
-    )
-    .min(0, { message: "Please include an amount." })
-    .refine(
-      (value) => /^[0-9]+(?:\.[0-9]+)?$/.test(value),
-      "Only numbers or decimals allowed."
-    ),
-  expenseCategory: z.string(),
-  expensePriority: z.string(),
-  expenseType: z.string(),
-})
-
-export function ExpenseForm() {
+export function ExpenseForm(expenseData: Props) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -115,7 +97,7 @@ export function ExpenseForm() {
                       <SelectValue placeholder='Groceries' />
                     </SelectTrigger>
                     <SelectContent>
-                      {categories.map((category) => (
+                      {subscriptionData.categories.map((category) => (
                         <SelectItem key={category} value={category}>
                           {category}
                         </SelectItem>
@@ -142,7 +124,7 @@ export function ExpenseForm() {
                       <SelectValue placeholder='Not Important' />
                     </SelectTrigger>
                     <SelectContent>
-                      {priorities.map((priority) => (
+                      {subscriptionData.priority.map((priority) => (
                         <SelectItem key={priority} value={priority}>
                           {priority}
                         </SelectItem>
@@ -169,7 +151,7 @@ export function ExpenseForm() {
                       <SelectValue placeholder='One-Time' />
                     </SelectTrigger>
                     <SelectContent>
-                      {paymentTypes.map((payment) => (
+                      {subscriptionData.paymentTypes.map((payment) => (
                         <SelectItem key={payment} value={payment}>
                           {payment}
                         </SelectItem>
