@@ -26,7 +26,7 @@ type User = {
   signedIn: boolean
 }
 
-let user = { permission: "owner", signedIn: true }
+let user = { permission: "owner", signedIn: false }
 
 import React from "react"
 import { navLinks } from "@/c"
@@ -50,11 +50,8 @@ function Navbar() {
   )
 
   return (
-    <NavigationMenu className='w-full bg-secondary'>
+    <NavigationMenu>
       <NavigationMenuList>
-        <NavigationMenuItem className={`text-xl font-bold text-green-700`}>
-          <NavigationMenuLink href='/'>Budget Buddy</NavigationMenuLink>
-        </NavigationMenuItem>
         {filteredLinks.map((link: navLink) => (
           <NavigationMenuItem key={link.id}>
             <Link href={link.href} legacyBehavior passHref>
