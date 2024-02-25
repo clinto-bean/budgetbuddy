@@ -26,7 +26,7 @@ type User = {
   signedIn: boolean
 }
 
-let user = { permission: "owner", signedIn: false }
+let user = { permission: "owner", signedIn: true }
 
 import React from "react"
 import { navLinks } from "@/c"

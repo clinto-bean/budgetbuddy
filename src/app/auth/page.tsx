@@ -8,10 +8,10 @@ import { Suspense } from "react"
 
 type Props = {}
 
-export function page({}: Props) {
+export default function page({}: Props) {
   return (
     <div
-      className={`relative max-md:flex-col flex justify-around gap-4 w-full items-center h-full`}>
+      className={`relative max-md:flex-col max-md:justify-center max-md:gap-8 flex justify-around gap-4 w-full max-h-screen h-[100dvh] items-center`}>
       <Suspense fallback={<div></div>}>
         <Image src={piggy} alt='' className='z-[-50] absolute w-full h-full' />
       </Suspense>
